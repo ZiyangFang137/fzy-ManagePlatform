@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>周教学质量管控</title>
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+		<style>
+			/* 为带有require类的元素添加红色星号前缀（保留原功能） */
+			.required::before {
+				/* 星号内容 */
+				content: "*";
+				/* 红色 */
+				color: #ff0000;
+				/* 与文字保持一点距离 */
+				margin-right: 4px;
+				/* 星号加粗 */
+				font-weight: bold;				
+			}
+
+			/* 核心修改：牛油果色系全局适配，不改变原代码结构 */
+			/* 1. 全局背景：牛油果浅绿，奠定柔和录入基调 */
+			body {
+				background-color: #e6f5e9 !important;
+				margin: 0;
+				padding: 20px;
+			}
+
+			/* 2. 标题区域：牛油果极浅绿背景+浅绿边框，突出录入主题 */
+			.layui-elem-field.layui-field-title {
+				border-color: #c9e2d0 !important;
+				background-color: #f9fdf7 !important;
+				border-radius: 8px !important;
+				padding: 15px 20px !important;
+				margin: 0 0 25px !important;
+			}
+
+			/* 标题文字：牛油果深绿，增强视觉焦点 */
+			.layui-elem-field.layui-field-title legend {
+				color: #6a994e !important;
+				font-weight: 500 !important;
+				padding: 0 10px !important;
+				font-size: 18px !important;
+			}
+
+			/* 3. 表单容器：白色背景，与全局浅绿分层，提升录入清晰度 */
+			.layui-form {
+				background-color: #fff !important;
+				border-radius: 8px !important;
+				padding: 30px;
+				box-shadow: 0 2px 10px rgba(106, 153, 78, 0.1) !important;
+			}
+
+			/* 4. 表单标签：牛油果配套深灰，确保文字可读性 */
+			.layui-form-label {
+				color: #4e5969 !important;
+				font-weight: 500 !important;
+			}
+
+			/* 5. 输入框/下拉框/日期选择框：牛油果浅绿边框，聚焦时加深反馈 */
+			.layui-input, .layui-select, .layui-textarea {
+				border-color: #c9e2d0 !important;
+				border-radius: 6px !important;
+			}
+			.layui-input:focus, .layui-select:focus, .layui-textarea:focus {
+				border-color: #6a994e !important;
+				box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
+			}
+
+			/* 6. 日期选择框弹出层：同步牛油果色系 */
+			.layui-laydate-header {
+				background-color: #6a994e !important;
+				color: #fff !important;
+			}
+			.layui-laydate-content td.layui-laydate-selected {
+				background-color: #f0f7ed !important;
+				color: #6a994e !important;
+			}
+			.layui-laydate-content td.layui-laydate-today em {
+				color: #6a994e !important;
+			}
+
+			/* 7. 确认保存按钮：牛油果深绿，hover时加深，增强提交交互 */
+			.layui-btn.layui-btn-normal {
+				background-color: #6a994e !important;
+				border-color: #6a994e !important;
+				color: #fff !important;
+				border-radius: 6px !important;
+			}
+			.layui-btn.layui-btn-normal:hover {
+				background-color: #5a8a40 !important;
+				border-color: #5a8a40 !important;
+			}
+
+			/* 8. 列布局适配：修复左右列间距，确保响应式显示 */
+			.layui-col-md6 {
+				margin-bottom: 15px;
+			}
+			/* 确保小屏幕下左右列垂直排列，避免重叠 */
+			@media (max-width: 768px) {
+				.layui-col-md6 {
+					width: 100% !important;
+					padding: 0 !important;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		
+		<fieldset class="layui-elem-field layui-field-title">
+			<legend style="font-weight: bold;">分数录入</legend>
+		</fieldset>
+		
+		
+		<div class="layui-form">
+			<div class="layui-form-item">
+			    <div class="layui-inline">
+			      <label class="layui-form-label">打分日期</label>
+			      <div class="layui-input-inline">
+			        <input type="text" class="layui-input" id="ID-laydate-type-datetime-1" placeholder="年-月-日-时间">
+			      </div>
+			    </div>
+			  </div>
+			
+			
+				<div class="layui-col-md6">
+					<div class="layui-form-item">
+							 <label class="layui-form-label required">班级</label>
+							 <div class="layui-input-block">
+				   <select lay-search="{caseSensitive:true}">
+				     <option value="">请选择班级</option>
+				     <option value="1">24130416</option>
+				     <option value="2">24130417</option>
+				     <option value="3">24130418</option>
+				     <option value="4">24130419</option>
+				     <option value="5">24130420</option>
+				     <option value="6">24130421</option>
+				     <option value="7">24130422</option>
+				     <option value="8">24130423</option>
+				   </select>
+							</div>
+				 </div>
+				 </div>
+				 <div class="layui-form-item">
+				 				 	<label class="layui-form-label required">教师</label>
+				 				 	<div class="layui-input-block">
+				 				 	<input id="exam" type="text" name="exam" class="layui-input" lay-verify="required"
+				 				 		lay-reqtext="教师姓名不能为空!" placeholder="请输入教师姓名">
+				 				 		</div>
+				 				 </div>
+				 <div class="layui-form-item">
+				 	<label class="layui-form-label required">打分平均成绩</label>
+				 	<div class="layui-input-block">
+				 	<input id="exam" type="text" name="exam" class="layui-input" lay-verify="required"
+				 		 placeholder="请输入成绩">
+				 		</div>
+				 </div>
+				 
+				
+								 <div class="layui-form-item">
+								 				 	<label class="layui-form-label required">录入人</label>
+								 				 	<div class="layui-input-block">
+								 				 	<input id="exam" type="text" name="exam" class="layui-input" lay-verify="required"
+								 				 		lay-reqtext="姓名不能为空!" placeholder="请输入录入人姓名" value="李四">
+								 				 		</div>
+								 				 </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea   name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+			</div>
+		</div> 
+		<!-- 提交按钮 -->
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+			</div>
+		</div><!-- 提交按钮结束 -->
+				
+	
+		
+		<script src="../lib/layui-v2.6.3/layui.js">
+			
+		</script>
+		<script>
+		layui.use(function(){
+		  var laydate = layui.laydate;
+		  laydate.render({
+		      elem: '#ID-laydate-type-datetime-1',
+		      type: 'datetime',
+		      fullPanel: true 
+		    });
+		  });
+		  </script>
+		   
+	</body>
+</html>

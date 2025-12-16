@@ -1,0 +1,152 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "page/home.html"
+  },
+  "logoInfo": {
+    "title": "实训过程管理",
+    "image": "../images/11.jpg",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "首页",
+          "href": "/page/home.html",
+          "icon": "fa fa-home",
+          "target": "_self"
+        },
+        {
+          "title": "学生管理",
+          "href": "",
+          "icon": "fa fa-group",
+          "target": "_self",
+          "child": [
+          {
+            "title": "学生账号注册",
+            "href": "student/studentZC.html",
+            "icon": "fa fa-plus-square-o",
+            "target": "_self"
+          }, {
+            "title": "学生查询",
+            "href": "student/studentCZ.html",
+            "icon": "fa fa-search",
+            "target": "_self"
+          }
+        ]
+        },
+        {
+          "title": "班级管理",
+          "href": "",
+          "icon": "fa fa-institution",
+          "target": "_self",
+          "child": [
+            {
+              "title": "添加班级",
+              "href": "class/addclass.html",
+              "icon": "fa fa-plus-square-o",
+              "target": "_self"
+            }, {
+              "title": "查询修改班级信息",
+              "href": "class/changeclass.html",
+              "icon": "fa fa-search",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "教师管理",
+          "href": "",
+          "icon": "fa fa-male",
+          "target": "_self",
+          "child": [
+            {
+              "title": "教师录入",
+              "href": "teacher/addteacher.html",
+              "icon": "fa fa-plus-circle",
+              "target": "_self"
+            }, {
+              "title": "教师修改",
+              "href": "teacher/changeteacher.html",
+              "icon": "fa fa-search-plus",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "过程质量管控",
+          "href": "",
+          "icon": "fa fa-check-circle",
+          "target": "_self",
+          "child": [
+            {
+              "title": "日常技术检查",
+              "href": "PQC/rTR.html",
+              "icon": "fa fa-check-square-o",
+              "target": "_self"
+            }, {
+              "title": "每日课前提问",
+              "href": "PQC/everyday.html",
+              "icon": "fa fa-question-circle",
+              "target": "_self"
+            },
+			{
+			  "title": "阶段笔试",
+			  "href": "PQC/bExam.html",
+			  "icon": " fa fa-pencil-square",
+			  "target": "_self"
+			},
+			{
+			  "title": "阶段面试",
+			  "href": "PQC/mExam.html",
+			  "icon": "fa fa-briefcase",
+			  "target": "_self"
+			},
+			{
+			  "title": "口述代码",
+			  "href": "PQC/daima.html",
+			  "icon": "fa fa-comment",
+			  "target": "_self"
+			},
+			{
+			  "title": "模拟面试",
+			  "href": "PQC/simulate.html",
+			  "icon": "fa fa-coffee",
+			  "target": "_self"
+			}
+          ]
+        },
+        {
+          "title": "教学质量管控",
+          "href": "",
+          "icon": "fa fa-desktop",
+          "target": "_self",
+          "child": [
+            {
+              "title": "周教学计划",
+              "href": "zTeach/zTeach.html",
+              "icon": "fa fa-calendar-o",
+              "target": "_self"
+            }, {
+              "title": "周教学总结",
+              "href": "zTeach/zTeachZj.html",
+              "icon": "fa fa-flag-checkered",
+              "target": "_self"
+            }, {
+              "title": "教师打分记录",
+              "href": "zTeach/zTeachJL.html",
+              "icon": "fa fa-history",
+              "target": "_self"
+            }
+          ]
+        }
+        
+      ]
+    }
+  ]
+}

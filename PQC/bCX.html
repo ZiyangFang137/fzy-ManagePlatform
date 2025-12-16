@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>查询笔试信息</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+	<link rel="stylesheet" href="../css/public.css" media="all">
+	<!-- 新增：牛油果色系样式（独立追加，不影响原有代码） -->
+	<style>
+		/* 1. 页面全局背景 - 牛油果浅绿（#e6f5e9），奠定柔和自然基调 */
+		body {
+			background-color: #e6f5e9 !important;
+			margin: 0;
+			padding: 15px; /* 避免内容贴边，提升页面呼吸感 */
+		}
+		/* 2. 内容容器 - 白色背景+圆角+浅阴影，与页面背景分层 */
+		.layuimini-container {
+			background-color: #fff !important;
+			border-radius: 8px !important;
+			box-shadow: 0 2px 10px rgba(106, 153, 78, 0.1) !important;
+			padding: 20px;
+		}
+		/* 3. 搜索区域（fieldset） - 牛油果色系边框+浅绿背景，强化功能分区 */
+		.table-search-fieldset {
+			border-color: #c9e2d0 !important; /* 牛油果浅灰绿边框 */
+			border-radius: 6px !important;
+			padding: 15px !important;
+			margin-bottom: 20px !important;
+			background-color: #f9fdf7 !important; /* 极浅牛油果绿背景 */
+		}
+		.table-search-fieldset legend {
+			background-color: #d4e9d9 !important; /* 牛油果浅绿标题背景 */
+			color: #4e5969 !important;
+			padding: 0 12px !important;
+			border-radius: 4px !important;
+			font-weight: 500 !important;
+			font-size: 14px;
+		}
+		/* 4. 搜索区输入框 - 基础样式适配，聚焦时突出交互 */
+		.table-search-fieldset .layui-input {
+			border-color: #c9e2d0 !important;
+			border-radius: 4px !important;
+			background-color: #fff !important;
+		}
+		.table-search-fieldset .layui-input:focus {
+			border-color: #6a994e !important; /* 聚焦边框：牛油果深绿 */
+			box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
+		}
+		/* 5. 搜索按钮 - 牛油果浅绿主色，hover时加深 */
+		.table-search-fieldset .layui-btn-primary {
+			background-color: #d4e9d9 !important;
+			border-color: #c9e2d0 !important;
+			color: #6a994e !important; /* 牛油果深绿文字 */
+		}
+		.table-search-fieldset .layui-btn-primary:hover {
+			background-color: #c9e2d0 !important;
+			border-color: #6a994e !important;
+		}
+		/* 6. 表格样式 - 边框+表头+行hover适配牛油果色系 */
+		.layui-table {
+			border-color: #c9e2d0 !important;
+		}
+		.layui-table th {
+			background-color: #f0f8f2 !important; /* 表头极浅牛油果绿 */
+			color: #4e5969 !important;
+			border-color: #c9e2d0 !important;
+		}
+		.layui-table tr:hover {
+			background-color: #f9fdf7 !important; /* 行hover浅绿背景，提升交互感知 */
+		}
+		.layui-table td {
+			border-color: #c9e2d0 !important;
+			color: #333 !important;
+		}
+		/* 7. 表格操作按钮（查看/修改/删除） - 查看/修改用牛油果色系，删除用红色 */
+		.data-count-edit {
+			background-color: #d4e9d9 !important;
+			border-color: #c9e2d0 !important;
+			color: #6a994e !important;
+		}
+		.data-count-edit:hover {
+			background-color: #c9e2d0 !important;
+			border-color: #6a994e !important;
+		}
+		.layui-btn-danger {
+			border-color: #ff8a80 !important; /* 保留红色系，与牛油果绿形成警示对比 */
+			color: #ff4444 !important;
+		}
+		.layui-btn-danger:hover {
+			background-color: #ffeeee !important;
+		}
+		/* 8. 状态开关 - 选中用牛油果深绿，未选中用浅绿 */
+		.layui-form-switch {
+			border-color: #c9e2d0 !important;
+			background-color: #f0f8f2 !important;
+		}
+		.layui-form-onswitch {
+			border-color: #6a994e !important;
+			background-color: #6a994e !important;
+		}
+		.layui-form-switch em {
+			color: #6a994e !important;
+		}
+		.layui-form-onswitch em {
+			color: #fff !important; /* 选中时文字变白，确保对比度 */
+		}
+		/* 9. 日期选择器 - 适配牛油果色系，保持风格统一 */
+		.layui-laydate {
+			border-color: #c9e2d0 !important;
+			border-radius: 6px !important;
+		}
+		.layui-laydate-header {
+			background-color: #d4e9d9 !important;
+			border-color: #c9e2d0 !important;
+		}
+		.layui-laydate-content td:hover, 
+		.layui-laydate-content td.layui-laydate-selected {
+			background-color: #f0f8f2 !important;
+			color: #6a994e !important;
+		}
+		/* 10. 分页控件 - 当前页指示器用牛油果深绿 */
+		.layui-laypage-em {
+			background-color: #6a994e !important;
+		}
+		.layui-laypage a:hover, 
+		.layui-laypage span:hover {
+			color: #6a994e !important;
+		}
+		/* 11. 修复搜索区表单嵌套导致的布局偏移 */
+		.table-search-fieldset .layui-form-item {
+			margin-bottom: 10px !important;
+		}
+		.table-search-fieldset .layui-inline {
+			margin-right: 15px !important;
+			margin-bottom: 10px !important;
+		}
+	</style>
+</head>
+<body>
+<div class="layuimini-container">
+	<div class="layuimini-main">
+
+		<fieldset class="table-search-fieldset">
+			<legend>搜索笔试信息</legend>
+			<div style="margin: 10px 10px 10px 10px">
+				<form class="layui-form layui-form-pane" action="">
+					<div class="layui-form-item">
+						<div class="layui-form-item">
+						    <div class="layui-inline">
+					      <label class="layui-form-label">日期范围</label>
+					      <div class="layui-inline" id="ID-laydate-range">
+					        <div class="layui-input-inline">
+					          <input type="text" autocomplete="off" id="ID-laydate-start-date" class="layui-input" placeholder="开始日期">
+					        </div>
+					        <div class="layui-form-mid">-</div>
+					        <div class="layui-input-inline">
+					          <input type="text" autocomplete="off" id="ID-laydate-end-date" class="layui-input" placeholder="结束日期">
+					        </div>
+					      </div>
+						  </div>
+						<div class="layui-inline">
+							<label class="layui-form-label">姓名</label>
+							<div class="layui-input-inline">
+								<input type="text" name="realName" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">考试名称</label>
+							<div class="layui-input-inline">
+								<input type="text" name="kaoshimingcheng" placeholder="请输入考试名称" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						
+						
+						<div class="layui-inline">
+							<label class="layui-form-label">班级</label>
+							<div class="layui-input-inline">
+								<input type="text" name="classname" placeholder="请输入班级" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						
+						<div class="layui-inline">
+							<button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+							<button type="button" class="layui-btn layui-btn-primary layui-btn-xs" style="margin-left: 8px;" id="resetBtn">重置</button> <!-- 新增重置按钮，提升操作便捷性 -->
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+
+		
+
+		<table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+		<!--自定义的列模板-->
+		<script type="text/html" id="statusTableBar">
+			<input type="checkbox" name="status" value="{{d.userid}}" checked lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus" {{ d.status == '1'? 'checked' : '' }}/>
+		</script>
+
+		<script type="text/html" id="currentTableBar">
+			<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看成绩</a>
+			<a class="layui-btn  layui-btn-xs data-count-edit" lay-event="edit">修改成绩</a>
+			<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+		</script>
+
+	</div>
+</div>
+<script src="../lib/layui-v2.6.3/layui.js">
+			
+		</script>
+<script>
+	layui.use(['form', 'table', 'layer', 'laydate'], function () {
+		var $ = layui.jquery,
+				form = layui.form,
+				table = layui.table,
+				layer = layui.layer,
+				laydate = layui.laydate;
+
+		table.render({
+			elem: '#currentTableId',
+			url: '../api/b.json',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: ['filter', 'exports', 'print', {
+				title: '提示',
+				layEvent: 'LAYTABLE_TIPS',
+				icon: 'layui-icon-tips'
+			}],
+			cols: [[
+				{type: "checkbox", width: 50},
+				{field: 'id', width: 80, title: '学号', sort: true},
+				{field: 'realname', width: 80, title: '姓名'},
+				
+				{field: 'classname', title: '班级', width: 100},
+				{field: 'name', width: 100, title: '考试名称'},
+				
+				{
+					field : 'status',
+					width: 100,
+					title : '用户状态',
+					templet : '#statusTableBar',
+					unresize : true,
+					align: "center"
+				},
+				{title: '操作', minWidth: 130, toolbar: '#currentTableBar', align: "center"}
+			]],
+			limits: [10, 15, 20, 25, 50, 100],
+			limit: 15,
+			page: true,
+			skin: 'line'
+		});
+
+		// 监听搜索操作
+		form.on('submit(data-search-btn)', function (data) {
+			var result = JSON.stringify(data.field);
+			// 优化：替换alert为layer.msg，提升交互体验
+			layer.msg('搜索参数：' + result, {icon: 0, time: 2000});
+
+			//执行搜索重载
+			table.reload('currentTableId', {
+				page: {
+					curr: 1
+				}
+				, where: {
+					searchParams: result
+				}
+			}, 'data');
+
+			return false;
+		});
+
+		// 新增：重置按钮功能（清空搜索框与日期选择器）
+		$('#resetBtn').on('click', function(){
+			$('form')[0].reset();
+			$('#ID-laydate-start-date').val('');
+			$('#ID-laydate-end-date').val('');
+			form.render(); // 重新渲染表单，解决layui输入框重置不生效问题
+		});
+
+		form.on('switch(modifystatus)', function(obj){
+			console.log(obj);
+			var param = obj.value;
+			// 优化：状态切换反馈
+			layer.msg('状态已切换为：' + (obj.elem.checked ? '启用' : '禁用'), {icon: 1, time: 1500});
+		});
+
+		/**
+		 * toolbar监听事件
+		 */
+		table.on('toolbar(currentTableFilter)', function (obj) {
+		    if (obj.event === 'delete') {  // 监听删除操作
+				var checkStatus = table.checkStatus('currentTableId')
+						, data = checkStatus.data;
+				if(data.length === 0){
+					layer.msg('请选择要删除的笔试信息', {icon: 2, time: 1500});
+					return;
+				}
+				layer.confirm('确定要删除选中的' + data.length + '条笔试信息吗？', {
+					icon: 3,
+					title: '确认提示'
+				}, function(index){
+					// 模拟删除：实际项目中需调用接口
+					layer.msg('删除成功', {icon: 1, time: 1500});
+					layer.close(index);
+				});
+			}
+		});
+
+		//监听表格复选框选择
+		table.on('checkbox(currentTableFilter)', function (obj) {
+			console.log(obj)
+		});
+
+		table.on('tool(currentTableFilter)', function (obj) {
+			var data = obj.data;
+			if(obj.event === 'detail'){
+				var index = layer.open({
+					title: '查看成绩',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					area: ['100%', '100%'],
+					content: 'bCJ.html',
+				});
+				$(window).on("resize", function () {
+					layer.full(index);
+				});
+				return false;
+			} else if (obj.event === 'edit') {
+				var index = layer.open({
+					title: '修改成绩',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					area: ['100%', '100%'],
+					content: 'bCJ.html',
+				});
+				$(window).on("resize", function () {
+					layer.full(index);
+				});
+				return false;
+			} else if (obj.event === 'delete') {
+				layer.confirm('真的删除该笔试信息吗？', function (index) {
+					obj.del();
+					layer.close(index);
+				});
+			}
+		});
+
+	});
+
+	// 年选择器（选择入学年份）
+	
+	
+	layui.use(function(){
+	  var laydate = layui.laydate;
+laydate.render({
+    elem: '#ID-laydate-range',
+    range: ['#ID-laydate-start-date', '#ID-laydate-end-date']
+  });
+  });
+
+</script>
+
+</body>
+</html>

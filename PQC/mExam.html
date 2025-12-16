@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实训过程质量跟踪管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+    <style>
+        /* 核心修改：替换原深色背景与图片，改为牛油果色系 */
+        body {
+            /* 移除原外部背景图，替换为牛油果浅绿背景 */
+            background: #e6f5e9;
+            background-size: cover;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background-color: #e6f5e9 !important; /* 强制覆盖，确保生效 */
+        }
+        
+        /* 头部区域：改为牛油果深绿，替代原深色(#162834) */
+        .header {
+            text-align: center;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            background-color: #6a994e !important;
+        }
+        
+        .logo {
+            width: 120px;
+            margin-bottom: 10px;
+        }
+        
+        /* 头部标题：白色适配深绿背景，弱化阴影避免突兀 */
+        .main-title {
+            color: #fff;
+            font-size: 28px;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* 导航栏：改为牛油果加深色，替代原黑色 */
+        .layui-nav.layui-bg-black {
+            background-color: #5a8a40 !important;
+        }
+        
+        /* 主内容区：文字改为牛油果配套深灰，移除原深色阴影 */
+        .main-content {
+            text-align: center;
+            margin-top: 50px;
+            color: #4e5969 !important;
+            text-shadow: none;
+        }
+        
+        /* 主标题（自律方能行稳致远）：牛油果深绿，突出重点 */
+        .main-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #6a994e !important;
+        }
+        
+        .main-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        /* 备用按钮（buy-btn）：同步牛油果色系渐变 */
+        .buy-btn {
+            background: linear-gradient(45deg, #6a994e, #85b665);
+            border: none;
+            font-size: 18px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: all 0.3s;
+            color: #fff !important;
+        }
+        
+        .buy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(106, 153, 78, 0.2);
+        }
+        
+        .product-section {
+            display: flex;
+            justify-content: space-around;
+            margin: 80px auto;
+            max-width: 1200px;
+            flex-wrap: wrap;
+        }
+        
+        /* 功能卡片：改为白色背景+牛油果浅绿边框，替代原深绿(#6ca481) */
+        .product-item {
+            width: 30%;
+            background: #fff !important;
+            border: 1px solid #c9e2d0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(106, 153, 78, 0.15);
+            transition: all 0.3s;
+            margin: 20px;
+        }
+        
+        .product-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(106, 153, 78, 0.25);
+        }
+		
+		        
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        /* 卡片标题：改为牛油果深绿，替代原棕色(#8B4513) */
+        .product-info h3 {
+            color: #6a994e !important;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        /* 卡片描述：改为深灰，提升可读性 */
+        .product-info p {
+            color: #4e5969 !important;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        /* 录入/查询按钮：改为牛油果深绿，替代原棕色(#8B4513) */
+        .detail-btn {
+            margin-top: 15px;
+            background: #6a994e !important;
+            color: white !important;
+        }
+        
+        .detail-btn:hover {
+            background: #5a8a40 !important; /* hover时加深，增强交互反馈 */
+        }
+        
+        /* 产品详情页面：同步适配牛油果色系 */
+        .product-detail {
+            display: none;
+            background: #e6f5e9 !important; /* 牛油果浅绿背景 */
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .detail-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .detail-header h1 {
+            color: #6a994e !important;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .detail-header p {
+            color: #4e5969 !important;
+            font-size: 16px;
+        }
+        
+        .detail-content {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .detail-image {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .detail-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(106, 153, 78, 0.2);
+        }
+        
+        .detail-info {
+            flex: 1;
+            min-width: 300px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(106, 153, 78, 0.1);
+        }
+        
+        .detail-info h2 {
+            color: #6a994e !important;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .detail-info p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 16px;
+            text-align: justify;
+            color: #4e5969 !important;
+        }
+        
+        .detail-specs {
+            background: #f9fdf7 !important; /* 牛油果极浅绿 */
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #c9e2d0;
+        }
+        
+        .spec-item {
+            display: flex;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        
+        .spec-label {
+            width: 100px;
+            font-weight: bold;
+            color: #6a994e !important;
+        }
+        
+        /* 返回按钮：同步牛油果色系 */
+        .back-btn {
+            background: #6a994e !important;
+            color: white !important;
+            margin-top: 20px;
+        }
+        
+        .back-btn:hover {
+            background: #5a8a40 !important;
+        }
+        
+        /* 响应式适配：保持原逻辑，同步色系 */
+        @media (max-width: 768px) {
+            .product-item {
+                width: 90%;
+                margin: 10px auto;
+            }
+            
+            .detail-content {
+                flex-direction: column;
+            }
+            
+            .main-content h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<script>
+document.querySelectorAll('.detail-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = this.getAttribute('data-href');
+        document.body.style.transition = 'opacity 2s ease';
+        document.body.style.opacity = '0';
+        setTimeout(() => {
+            window.location.href = target;
+        }, 500);
+    });
+});
+</script>
+<div id="home-page">
+    <div class="header">
+        <h2 class="main-title">阶段面试</h2>
+        <div class="nav-container">
+            <ul class="layui-nav layui-bg-black" lay-filter="">
+            </ul>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <h1>自律方能行稳致远</h1>
+    </div>
+
+    <div class="product-section">
+        <div class="product-item">
+            <div class="product-info">
+                <h3>录入信息</h3>
+                <p>不是看到希望才坚持，而是坚持了才能看到希望。</p>
+                <button class="layui-btn detail-btn" onclick="window.location.href='mLR.html'">点击录入</button>
+            </div>
+        </div>
+        
+        <div class="product-item">
+            <div class="product-info">
+                <h3>查询统计</h3>
+                <p>每一个不曾起舞的日子，都是对生命的辜负。</p>
+                <button class="layui-btn detail-btn" onclick="window.location.href='mCX.html'">点击查询</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+</body>
+</html>

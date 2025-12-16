@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>日常技术检查-信息录入</title>
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+		<style>
+			/* 原有样式：必填项红色星号（保留不修改） */
+			.required::before {
+				/* 星号内容 */
+				content: "*";
+					/* 红色 */
+				color: #ff0000;
+				/* 与文字保持一点距离 */
+				margin-right: 4px;
+			/* 星号加粗 */
+				font-weight: bold;				
+			}
+			/* 新增：牛油果色系样式（独立追加，不影响原有代码） */
+			/* 1. 页面全局背景 - 牛油果浅绿（#e6f5e9），奠定柔和自然基调 */
+			body {
+				background-color: #e6f5e9 !important;
+				margin: 0;
+				padding: 20px; /* 避免内容贴边，提升页面呼吸感 */
+			}
+			/* 2. 标题区域（fieldset） - 牛油果浅绿边框+白色背景，突出标题 */
+			.layui-elem-field {
+				border-color: #c9e2d0 !important; /* 牛油果浅灰绿边框 */
+				border-radius: 8px !important;
+				background-color: #fff !important;
+				padding: 15px 20px !important;
+				margin-bottom: 25px !important;
+				box-shadow: 0 2px 8px rgba(106, 153, 78, 0.1) !important;
+			}
+			.layui-elem-field legend {
+				background-color: #d4e9d9 !important; /* 牛油果浅绿标题背景 */
+				color: #4e5969 !important;
+				padding: 0 12px !important;
+				border-radius: 4px !important;
+				margin-left: -5px !important; /* 对齐边框，视觉更协调 */
+			}
+			/* 3. 表单容器 - 白色背景+圆角+阴影，与页面背景分层 */
+			.layui-form {
+				background-color: #fff !important;
+				border-radius: 8px !important;
+				padding: 30px;
+				box-shadow: 0 2px 8px rgba(106, 153, 78, 0.1) !important;
+			}
+			/* 4. 表单标签 - 文字颜色适配牛油果色系，提升可读性 */
+			.layui-form-label {
+				color: #5a685c !important;
+				font-weight: 500 !important;
+			}
+			/* 5. 输入框/下拉框/文本域 - 边框+聚焦样式，增强交互反馈 */
+			.layui-input, .layui-select, .layui-textarea {
+				border-color: #c9e2d0 !important;
+				border-radius: 6px !important;
+			}
+			.layui-input:focus, .layui-select:focus, .layui-textarea:focus {
+				border-color: #6a994e !important; /* 聚焦：牛油果深绿，明确交互状态 */
+				box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
+			}
+			/* 6. 日期选择器容器 - 适配牛油果色系，避免与整体风格冲突 */
+			.layui-laydate {
+				border-color: #c9e2d0 !important;
+				border-radius: 6px !important;
+			}
+			.layui-laydate-header {
+				background-color: #d4e9d9 !important; /* 日期选择器头部：牛油果浅绿 */
+				border-color: #c9e2d0 !important;
+			}
+			.layui-laydate-content td:hover, 
+			.layui-laydate-content td.layui-laydate-selected {
+				background-color: #f0f8f2 !important; /* 日期hover/选中：极浅牛油果绿 */
+				color: #6a994e !important; /* 文字：牛油果深绿 */
+			}
+			/* 7. 提交按钮 - 牛油果深绿主色，hover加深，增强点击欲望 */
+			.layui-btn-normal {
+				background-color: #6a994e !important;
+				border-color: #6a994e !important;
+				border-radius: 6px !important;
+			}
+			.layui-btn-normal:hover {
+				background-color: #5a8a40 !important; /* hover：加深的牛油果绿 */
+				border-color: #5a8a40 !important;
+			}
+			/* 8. 修复列布局偏移（原代码layui-col-md6未包裹在row中） */
+			.layui-form-item .layui-col-md6 {
+				margin-bottom: 15px; /* 增加底部间距，避免与下一行元素重叠 */
+			}
+		</style>
+	</head>
+	<body>
+		
+		<fieldset class="layui-elem-field layui-field-title">
+			<legend style="font-weight: bold;">信息录入</legend>
+		</fieldset>
+		
+		
+		<div class="layui-form">
+			<div class="layui-form-item">
+			    <div class="layui-inline">
+			      <label class="layui-form-label">考试日期</label>
+			      <div class="layui-input-inline">
+			        <input type="text" class="layui-input" id="ID-laydate-type-datetime-1" placeholder="年-月-日-时间">
+			      </div>
+			    </div>
+			  </div>
+			<div class="layui-form-item">
+				<label class="layui-form-label required">考试名称</label>
+				<div class="layui-input-block">
+				<input id="exam" type="text" name="exam" class="layui-input" lay-verify="required"
+					lay-reqtext="考试名称不能为空!" placeholder="请输入考试名称" value="C++应用" class="layui-input">
+					</div>
+			</div>
+			
+				<div class="layui-col-md6">
+					<div class="layui-form-item">
+							 <label class="layui-form-label required">班级</label>
+							 <div class="layui-input-block">
+				   <select lay-search="{caseSensitive:true}" lay-verify="required"> <!-- 新增必填校验，与“required”标签匹配 -->
+				     <option value="">请选择班级</option>
+				     <option value="1">24130416</option>
+				     <option value="2">24130417</option>
+				     <option value="3">24130418</option>
+				     <option value="4">24130419</option>
+				     <option value="5">24130420</option>
+				     <option value="6">24130421</option>
+				     <option value="7">24130422</option>
+				     <option value="8">24130423</option>
+				   </select>
+							</div>
+				 </div>
+				 </div>
+				 <div class="layui-form-item">
+				 	<label class="layui-form-label required">考生姓名</label>
+				 	<div class="layui-input-block">
+				 	<input id="studentName" type="text" name="studentName" class="layui-input" lay-verify="required"
+				 		lay-reqtext="考生姓名不能为空!" placeholder="请输入考生姓名" value="张三" class="layui-input">
+				 		</div>
+				 </div>
+				 <div class="layui-form-item">
+				 	<label class="layui-form-label required">成绩</label>
+				 	<div class="layui-input-block">
+				 	<input id="score" type="text" name="score" class="layui-input" lay-verify="required|number" 
+				 		 placeholder="请输入成绩" value="90" class="layui-input">
+				 		</div>
+				 </div>
+				
+				
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea name="remark" class="layui-textarea" placeholder="请输入备注信息">正常</textarea> <!-- 修复textarea不支持value属性的问题，直接填充内容 -->
+			</div>
+		</div> 
+		<!-- 提交按钮 -->
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+				<button type="button" class="layui-btn layui-btn-primary layui-btn-normal" style="margin-left: 10px;" onclick="history.back()">取消</button> <!-- 新增取消按钮，提升操作便捷性 -->
+			</div>
+		</div><!-- 提交按钮结束 -->
+				
+	
+		
+		<script src="../lib/layui-v2.6.3/layui.js">
+			
+		</script>
+		<script>
+		layui.use(['laydate', 'form', 'layer'], function(){ // 新增form和layer模块，支持表单校验与反馈
+		  var laydate = layui.laydate,
+		  		form = layui.form,
+		  		layer = layui.layer;
+		  
+		  // 日期选择器（适配牛油果色系主题）
+		  laydate.render({
+		      elem: '#ID-laydate-type-datetime-1',
+		      type: 'datetime',
+		      fullPanel: true,
+		      theme: '#d4e9d9' // 日期选择器主题：牛油果浅绿，保持风格统一
+		    });
+		  
+		  // 表单验证：新增成绩数字校验规则
+		  form.verify({
+		  	number: [/^\d+(\.\d+)?$/, '请输入有效的数字成绩（整数或小数）']
+		  });
+		  
+		  // 提交按钮监听：新增保存成功反馈
+		  form.on('submit(saveBtn)', function(data){
+		  	layer.msg('考试信息录入成功！', {
+		  		icon: 1, // 成功图标
+		  		time: 1500 // 1.5秒后自动关闭
+		  	}, function(){
+		  		// 可根据需求添加跳转逻辑（如返回信息列表）
+		  		// history.back();
+		  	});
+		  	return false; // 阻止表单默认提交，避免页面刷新丢失数据
+		  });
+		});
+		</script>
+		   
+	</body>
+</html>

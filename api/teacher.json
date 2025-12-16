@@ -1,0 +1,89 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 1000,
+  "data": [
+    {
+      "id": 10000,
+      "realname": "张三",
+      
+      "majorname": "硕士研究生",
+      "telephone": "13545678767"
+     
+    },
+    {
+      "id": 10001,
+      "realname": "王五",
+     
+      "majorname": "硕士研究生",
+      
+      "telephone": "13834523412"
+      
+    },{
+      "id": 10002,
+      "realname": "李四",
+      
+      "majorname": "博士",
+      
+      "telephone": "13545678767"
+      
+    },{
+      "id": 10003,
+      "realname": "张三",
+      "majorname": "博士",
+      "telephone": "18045678767"
+    },{
+      "id": 10004,
+      "realname": "张三",
+      "majorname": "博士",
+     
+      "telephone": "13545678767"
+      
+    },{
+      "id": 10005,
+      "realname": "张三",
+      
+      "majorname": "博士",
+      
+      
+      "telephone": "13545678767"
+     
+    },{
+      "id": 10006,
+      "realname": "张三",
+     
+     "majorname": "博士",
+      
+      
+      "telephone": "13545678767"
+     
+    },{
+      "id": 10007,
+      "realname": "张三",
+      
+      "majorname": "博士",
+      
+      
+      "telephone": "13545678767"
+      
+    },{
+      "id": 10008,
+      "realname": "张三",
+      
+      "majorname": "博士",
+      
+      
+      "telephone": "13545678767"
+      
+    },{
+      "id": 10009,
+      "realname": "张三",
+     
+      "majorname": "博士",
+     
+      
+      "telephone": "13545678767"
+      
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>添加学生</title>
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+		<style>
+			/* 1. 页面最外层背景：核心牛油果色（#e6f5e9，浅黄绿调，贴近牛油果外皮柔和质感） */
+			body {
+				background-color: #e6f5e9;
+				margin: 0;
+				padding: 20px; /* 增加页面内边距，避免表单贴边 */
+			}
+			/* 为带有require类的元素添加红色星号前缀 */
+			.required::before {
+				content: "*";
+				color: #ff0000;
+				margin-right: 4px;
+				font-weight: bold;				
+			}
+			/* 2. 表单标题栏（fieldset）：背景改为浅牛油果绿，增强视觉焦点 */
+			.layui-elem-field {
+				border-color: #c9e2d0 !important; /* 边框：牛油果色系浅灰绿 */
+			}
+			.layui-field-title legend {
+				background-color: #d4e9d9 !important; /* 标题背景：浅牛油果绿 */
+				padding: 0 15px; /* 增加标题内边距，更美观 */
+				border-radius: 4px;
+			}
+			/* 3. 表单输入框/下拉框：边框改为牛油果色系，背景保持白色确保输入清晰 */
+			.layui-input, .layui-select, .layui-textarea {
+				border: 1px solid #c9e2d0 !important; /* 边框：牛油果色系浅灰绿 */
+				border-radius: 4px;
+				background-color: #fff; /* 白色背景，确保文字输入清晰 */
+			}
+			/* 4. 输入框/下拉框聚焦状态：边框用深牛油果绿，突出交互 */
+			.layui-input:focus, .layui-select:focus, .layui-textarea:focus {
+				border-color: #6a994e !important; /* 聚焦边框：深牛油果绿 */
+				box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important; /* 聚焦阴影：牛油果绿浅晕 */
+			}
+			/* 5. 单选按钮：选中状态用深牛油果绿，与整体风格统一 */
+			.layui-form-radio > i:hover, 
+			.layui-form-radioed > i {
+				color: #6a994e !important; /* 单选按钮图标颜色：深牛油果绿 */
+			}
+			.layui-form-radioed > span {
+				color: #6a994e !important; /* 单选按钮文字颜色：深牛油果绿 */
+			}
+			/* 6. 提交按钮：背景用深牛油果绿，hover时加深，增强交互感 */
+			.layui-btn-normal {
+				background-color: #6a994e !important; /* 按钮背景：深牛油果绿 */
+				border-color: #6a994e !important;
+			}
+			.layui-btn-normal:hover {
+				background-color: #5a8a40 !important; /* hover背景：更深的牛油果绿 */
+				border-color: #5a8a40 !important;
+			}
+			/* 7. 日期选择器输入框：继承表单样式，确保视觉统一 */
+			#ID-laydate-type-year {
+				border: 1px solid #c9e2d0 !important;
+			}
+			#ID-laydate-type-year:focus {
+				border-color: #6a994e !important;
+				box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<fieldset class="layui-elem-field layui-field-title">
+			<legend style="font-weight: bold;">学生账号注册</legend>
+		</fieldset>
+		
+		
+		<div class="layui-form">
+			<div class="layui-form-item">
+				<label class="layui-form-label required">学号</label>
+				<div class="layui-input-block">
+				<input id="xuehao" type="text" name="xuehao" class="layui-input" lay-verify="required"
+					lay-reqtext="学号不能为空!" placeholder="请输入学号">
+					</div>
+			</div>
+			<div class="layui-form-item">
+					<label class="layui-form-label required">姓名</label>
+					<div class="layui-input-block">
+					<input id="username" type="text" name="username" class="layui-input" lay-verify="required"
+						lay-reqtext="姓名不能为空!" placeholder="请输入姓名" >
+			</div>
+				</div>
+			
+		<div class="layui-form-item">
+			<label class="layui-form-label required">籍贯</label>
+			<div class="layui-input-block">
+				<select lay-verify="required">
+					<option value="1">山西大同</option>
+					<option value="2">山西太原</option>
+					<option value="3">山西临汾</option>
+					<option value="3">山西吕梁</option>
+					<option value="3">山西晋中</option>
+					<option value="3">山西朔州</option>
+					<option value="3">山西长治</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="layui-form-item">
+			<label class="layui-form-label required">性别</label>
+			<div class="layui-input-block">
+				<input type="radio" name="sex" value="男" title="男" checked="">
+				<input type="radio" name="sex" value="女" title="女">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label required">学校全称</label>
+			<div class="layui-input-block">
+			<input id="schoolName" type="text" name="schoolName" class="layui-input" lay-verify="required"
+				lay-reqtext="学校全称不能为空!" placeholder="请输入学校全称">
+				</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label required">专业</label>
+			<div class="layui-input-block">
+				<select lay-verify="required">
+					<option value="1">计算机科学与技术</option>
+					<option value="2">电子信息工程</option>
+					<option value="3">机械电子工程</option>
+					<option value="3">软件工程</option>
+					
+				</select>
+			</div>
+		</div>
+		
+		 <div class="layui-form-item"> <!-- 修复原代码中col-md6导致的布局错乱，改为标准form-item -->
+			 <label class="layui-form-label required">班级</label>
+			 <div class="layui-input-block">
+		    <select lay-search="{caseSensitive:true}" lay-verify="required">
+		      <option value="">请选择班级</option>
+		      <option value="1">24130416</option>
+		      <option value="2">24130417</option>
+		      <option value="3">24130418</option>
+		      <option value="4">24130419</option>
+		      <option value="5">24130420</option>
+		      <option value="6">24130421</option>
+		      <option value="7">24130422</option>
+		      <option value="8">24130423</option>
+		    </select>
+			</div>
+		  </div>
+		
+		    <div class="layui-form-item">
+		      <div class="layui-inline">
+		        <label class="layui-form-label required">年级</label> <!-- 年级为必填项，补充required类 -->
+		        <div class="layui-input-inline">
+		          <input type="text" class="layui-input" id="ID-laydate-type-year" placeholder="请选择年级" lay-verify="required" lay-reqtext="年级不能为空!">
+		        </div>
+		      </div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label required">方向</label>
+				<div class="layui-input-block">
+					<select lay-verify="required">
+						<option value="">请选择方向</option> <!-- 补充默认空选项，规范表单 -->
+						<option value="1">A方向</option>
+						<option value="2">B方向</option>
+						<option value="3">C方向</option>
+						<option value="4">D方向</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label required">考研考公</label>
+				<div class="layui-input-block">
+					<input type="radio" name="kaoshi" value="考研" title="考研" checked="">
+					<input type="radio" name="kaoshi" value="考公" title="考公">
+					<input type="radio" name="kaoshi" value="其他" title="其他">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label required">电话号码</label>
+				<div class="layui-input-block">
+				<input id="num" type="text" name="num" class="layui-input" lay-verify="required|phone" lay-reqtext="电话号码不能为空!" placeholder="请输入电话号码" lay-phone="请输入正确的电话号码!">
+					</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label required">紧急联系人</label>
+				<div class="layui-input-block">
+				<input id="jname" type="text" name="jname" class="layui-input" lay-verify="required" lay-reqtext="紧急联系人不能为空!" placeholder="请输入紧急联系人">
+					</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label required">紧急联系人电话号码</label>
+				<div class="layui-input-block">
+				<input id="jnum" type="text" name="jnum" class="layui-input" lay-verify="required|phone" lay-reqtext="紧急联系人电话号码不能为空!" placeholder="请输入电话号码" lay-phone="请输入正确的电话号码!">
+					</div>
+			</div>
+		
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+			</div>
+		</div> 
+		<!-- 提交按钮 -->
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+				<button type="reset" class="layui-btn layui-btn-primary" style="margin-left: 10px;">重置表单</button> <!-- 补充重置按钮，提升用户体验 -->
+			</div>
+		</div><!-- 提交按钮结束 -->
+				
+		</div>
+		
+		<script src="../lib/layui-v2.6.3/layui.js"></script>
+		<script>
+		layui.use(['form', 'laydate'], function(){
+		  var form = layui.form;
+		  var laydate = layui.laydate;
+		  
+		  // 1. 年选择器初始化
+		  laydate.render({
+		    elem: '#ID-laydate-type-year',
+		    type: 'year',
+		    theme: '#d4e9d9' // 日期选择器主题：浅牛油果绿，与页面风格统一
+		  });
+		  
+		  // 2. 表单验证（可选，增强表单合法性校验）
+		  form.on('submit(saveBtn)', function(data){
+		    // 表单数据提交逻辑（可根据需求对接接口）
+		    layer.msg('表单提交成功！', {icon: 1, time: 1500}, function(){
+		      // 提交成功后的操作（如重置表单、关闭页面等）
+		      // form.val("layui-form", {""}); // 重置表单示例
+		    });
+		    return false; // 阻止表单默认提交
+		  });
+		  
+		  // 3. 渲染表单（确保layui样式生效）
+		  form.render();
+		});
+		</script>
+		   
+	</body>
+</html>

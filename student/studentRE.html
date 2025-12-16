@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>修改学生信息</title>
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+		<style>
+			/* 1. 页面最外层背景：核心牛油果色（#e6f5e9，浅黄绿调，贴近牛油果外皮柔和质感） */
+			body {
+				background-color: #e6f5e9;
+				margin: 0;
+				padding: 20px; /* 增加内边距，避免表单贴边，提升美观度 */
+			}
+			/* 为带有require类的元素添加红色星号前缀（修改场景保留标记，明确必填项） */
+			.required::before {
+				content: "*";
+				color: #ff0000;
+				margin-right: 4px;
+				font-weight: bold;				
+			}
+			/* 2. 表单标题栏（fieldset）：牛油果色系样式，增强视觉焦点 */
+			.layui-elem-field {
+				border-color: #c9e2d0 !important; /* 边框：牛油果浅灰绿，弱化生硬感 */
+			}
+			.layui-field-title legend {
+				background-color: #d4e9d9 !important; /* 标题背景：浅牛油果绿 */
+				padding: 0 15px; /* 增加内边距，包裹标题文字 */
+				border-radius: 4px; /* 圆角优化，更显柔和 */
+			}
+			/* 3. 输入框/下拉框/文本域：基础样式适配牛油果色系，保留编辑功能 */
+			.layui-input, .layui-select, .layui-textarea {
+				border-color: #c9e2d0 !important; /* 边框：牛油果浅灰绿 */
+				background-color: #fff !important; /* 白色背景，确保输入清晰 */
+				color: #4e5969 !important; /* 文字颜色：深灰，提升可读性 */
+			}
+			/* 4. 输入元素聚焦状态：用深牛油果绿突出交互，增强操作反馈 */
+			.layui-input:focus, .layui-select:focus, .layui-textarea:focus {
+				border-color: #6a994e !important; /* 聚焦边框：深牛油果绿 */
+				box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important; /* 聚焦阴影：牛油果绿浅晕 */
+			}
+			/* 5. 单选按钮：选中状态用深牛油果绿，与整体色系呼应 */
+			.layui-form-radio > i:hover, 
+			.layui-form-radioed > i {
+				color: #6a994e !important; /* 单选图标颜色：深牛油果绿 */
+			}
+			.layui-form-radioed > span {
+				color: #6a994e !important; /* 单选文字颜色：深牛油果绿 */
+			}
+			/* 6. 按钮样式：适配牛油果色系，区分“确认保存”与“取消”（修改场景常用按钮） */
+			.layui-btn-normal {
+				background-color: #6a994e !important; /* 主按钮：深牛油果绿 */
+				border-color: #6a994e !important;
+			}
+			.layui-btn-normal:hover {
+				background-color: #5a8a40 !important; /* hover：更深的牛油果绿，增强交互感 */
+				border-color: #5a8a40 !important;
+			}
+			.layui-btn-primary {
+				border-color: #c9e2d0 !important; /* 次要按钮：牛油果浅灰绿边框 */
+				color: #6a994e !important; /* 文字：深牛油果绿 */
+			}
+			.layui-btn-primary:hover {
+				background-color: #d4e9d9 !important; /* hover背景：浅牛油果绿 */
+			}
+			/* 7. 日期选择器：适配整体样式，主题色用浅牛油果绿 */
+			#ID-laydate-type-year {
+				border-color: #c9e2d0 !important;
+			}
+			#ID-laydate-type-year:focus {
+				border-color: #6a994e !important;
+				box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 网页标题，这里用fieldset来设置 -->
+		<fieldset class="layui-elem-field layui-field-title">
+			<legend style="font-weight: bold;">修改学生信息</legend>
+		</fieldset>
+		
+		
+		<div class="layui-form" lay-filter="editStudentForm">
+			<!-- 姓名：保留编辑功能，填充默认值 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">姓名</label>
+				<div class="layui-input-block">
+					<input id="username" type="text" name="username" class="layui-input" lay-verify="required"
+						lay-reqtext="姓名不能为空!" placeholder="请输入姓名" value="小新">
+				</div>
+			</div>
+			<!-- 籍贯：保留下拉编辑，补充默认选中值 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">籍贯</label>
+				<div class="layui-input-block">
+					<select lay-verify="required">
+						<option value="1">山西大同</option>
+						<option value="2" selected>山西太原</option> <!-- 默认选中“山西太原”，模拟已有数据 -->
+						<option value="3">山西临汾</option>
+						<option value="3">山西吕梁</option>
+						<option value="3">山西晋中</option>
+						<option value="3">山西朔州</option>
+						<option value="3">山西长治</option>
+					</select>
+				</div>
+			</div>
+			<!-- 性别：保留单选编辑，默认选中“男” -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">性别</label>
+				<div class="layui-input-block">
+					<input type="radio" name="sex" value="男" title="男" checked>
+					<input type="radio" name="sex" value="女" title="女">
+				</div>
+			</div>
+			<!-- 学校全称：修复重复id“xuehao”，改为“schoolName”，保留编辑 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">学校全称</label>
+				<div class="layui-input-block">
+					<input id="schoolName" type="text" name="schoolName" class="layui-input" lay-verify="required"
+						lay-reqtext="学校全称不能为空!" placeholder="请输入学校全称" value="中北大学">
+				</div>
+			</div>
+			<!-- 专业：保留下拉编辑，默认选中“计算机科学与技术” -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">专业</label>
+				<div class="layui-input-block">
+					<select lay-verify="required">
+						<option value="1" selected>计算机科学与技术</option> <!-- 默认选中，模拟已有数据 -->
+						<option value="2">电子信息工程</option>
+						<option value="3">机械电子工程</option>
+						<option value="3">软件工程</option>
+					</select>
+				</div>
+			</div>
+			<!-- 班级：修复原col-md6布局错乱，改为标准form-item，保留下拉编辑 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">班级</label>
+				<div class="layui-input-block">
+					<select lay-search="{caseSensitive:true}" lay-verify="required">
+						<option value="">请选择班级</option>
+						<option value="1">24130416</option>
+						<option value="2" selected>24130417</option> <!-- 默认选中，模拟已有数据 -->
+						<option value="3">24130418</option>
+						<option value="4">24130419</option>
+						<option value="5">24130420</option>
+						<option value="6">24130421</option>
+						<option value="7">24130422</option>
+						<option value="8">24130423</option>
+					</select>
+				</div>
+			</div>
+			<!-- 年级：补充必填校验，保留日期选择编辑，填充默认值 -->
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label required">年级</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" id="ID-laydate-type-year" placeholder="请选择年级" value="2024" lay-verify="required" lay-reqtext="年级不能为空!">
+					</div>
+				</div>
+			</div>
+			<!-- 方向：保留下拉编辑，默认选中“A方向”，修复重复value -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">方向</label>
+				<div class="layui-input-block">
+					<select lay-verify="required">
+						<option value="1" selected>A方向</option> <!-- 默认选中，模拟已有数据 -->
+						<option value="2">B方向</option>
+						<option value="3">C方向</option>
+						<option value="4">D方向</option> <!-- 修复重复value“3”，改为“4” -->
+					</select>
+				</div>
+			</div>
+			<!-- 考研考公：保留单选编辑，默认选中“考研” -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">考研考公</label>
+				<div class="layui-input-block">
+					<input type="radio" name="kaoshi" value="考研" title="考研" checked>
+					<input type="radio" name="kaoshi" value="考公" title="考公">
+					<input type="radio" name="kaoshi" value="其他" title="其他">
+				</div>
+			</div>
+			<!-- 电话号码：保留编辑，补充手机号格式校验 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">电话号码</label>
+				<div class="layui-input-block">
+					<input id="num" type="text" name="num" class="layui-input" lay-verify="required|phone"
+						lay-reqtext="电话号码不能为空!" lay-phone="请输入正确的电话号码!" placeholder="请输入电话号码" value="13593004817">
+				</div>
+			</div>
+			<!-- 紧急联系人：保留编辑，修复默认值“zhangsan”为中文“张三” -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">紧急联系人</label>
+				<div class="layui-input-block">
+					<input id="jname" type="text" name="jname" class="layui-input" lay-verify="required"
+						lay-reqtext="紧急联系人不能为空!" placeholder="请输入紧急联系人" value="张三">
+				</div>
+			</div>
+			<!-- 紧急联系人电话号码：保留编辑，补充手机号格式校验 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">紧急联系人电话号码</label>
+				<div class="layui-input-block">
+					<input id="jnum" type="text" name="jnum" class="layui-input" lay-verify="required|phone"
+						lay-reqtext="紧急联系人电话号码不能为空!" lay-phone="请输入正确的电话号码!" placeholder="请输入电话号码" value="13593004817">
+				</div>
+			</div>
+			<!-- 备注：保留文本域编辑，修复“value”属性无效问题（文本域用innerHTML赋值） -->
+			<div class="layui-form-item">
+				<label class="layui-form-label">备注</label>
+				<div class="layui-input-block">
+					<textarea name="remark" class="layui-textarea" placeholder="请输入备注信息">五</textarea>
+				</div>
+			</div> 
+			<!-- 按钮区：补充“取消”按钮，适配牛油果色系，符合修改场景操作逻辑 -->
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn layui-btn-primary" id="cancelBtn">取消</button>
+					<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn" style="margin-left: 10px;">确认保存</button>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../lib/layui-v2.6.3/layui.js"></script>
+		<script>
+		layui.use(['form', 'laydate', 'layer'], function(){
+			var form = layui.form;
+			var laydate = layui.laydate;
+			var layer = layui.layer;
+
+			// 1. 年选择器：主题色适配牛油果绿，保留编辑功能
+			laydate.render({
+				elem: '#ID-laydate-type-year',
+				type: 'year',
+				theme: '#d4e9d9' // 日期选择器主题：浅牛油果绿
+			});
+
+			// 2. 取消按钮逻辑（模拟返回上一页）
+			document.getElementById('cancelBtn').addEventListener('click', function(){
+				layer.confirm('确定要取消修改吗？未保存的内容将丢失', {
+					title: '提示',
+					icon: 3
+				}, function(index){
+					// 实际项目中可替换为学生详情页URL，如 window.location.href = 'student-detail.html';
+					layer.msg('已取消修改', {icon: 0, time: 1000}, function(){
+						layer.close(index);
+					});
+				});
+			});
+
+			// 3. 确认保存按钮逻辑（表单提交校验+模拟保存）
+			form.on('submit(saveBtn)', function(data){
+				// 表单数据打印（实际项目中替换为接口请求）
+				console.log('修改后的学生信息：', data.field);
+				// 保存成功提示
+				layer.msg('信息修改成功！', {icon: 1, time: 1500}, function(){
+					// 保存成功后可跳转至详情页或列表页
+					// window.location.href = 'student-detail.html';
+				});
+				return false; // 阻止表单默认提交
+			});
+
+			// 4. 渲染表单（确保layui样式生效，尤其是单选、下拉框）
+			form.render();
+		});
+		</script>
+		   
+	</body>
+</html>

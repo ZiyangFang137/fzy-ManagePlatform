@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>周教学质量管控-周教学计划</title>
+    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+    <style>
+        /* 为带有required类的元素添加红色星号前缀（保留原功能） */
+        .required::before {
+            content: "*";
+            color: #ff0000;
+            margin-right: 4px;
+            font-weight: bold;
+        }
+
+        /* 核心新增：牛油果色系全局适配 */
+        /* 1. 全局背景：牛油果浅绿，奠定柔和计划录入基调 */
+        body {
+            background-color: #e6f5e9 !important;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* 2. 标题区域：牛油果极浅绿背景+浅绿边框，突出“周教学计划”主题 */
+        .layui-elem-field.layui-field-title {
+            border-color: #c9e2d0 !important;
+            background-color: #f9fdf7 !important;
+            border-radius: 8px !important;
+            padding: 15px 20px !important;
+            margin: 0 0 25px !important;
+        }
+
+        /* 标题文字：牛油果深绿，替代原黑色，增强主题辨识度 */
+        .layui-elem-field.layui-field-title legend {
+            color: #6a994e !important;
+            font-weight: 500 !important;
+            padding: 0 10px !important;
+            font-size: 18px !important;
+        }
+
+        /* 3. 表单容器：白色背景+阴影，与全局浅绿分层，提升输入清晰度 */
+        .layui-form {
+            background-color: #fff !important;
+            border-radius: 8px !important;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(106, 153, 78, 0.1) !important;
+        }
+
+        /* 4. 表单标签：牛油果配套深灰，避免刺眼，提升可读性 */
+        .layui-form-label {
+            color: #4e5969 !important;
+            font-weight: 500 !important;
+        }
+
+        /* 5. 输入框/下拉框/文本域：牛油果浅绿边框，聚焦时加深反馈 */
+        .layui-input, .layui-select, .layui-textarea {
+            border-color: #c9e2d0 !important;
+            border-radius: 6px !important;
+        }
+        .layui-input:focus, .layui-select:focus, .layui-textarea:focus {
+            border-color: #6a994e !important;
+            box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
+        }
+
+        /* 6. 确认保存按钮：牛油果深绿，替代原浅灰，增强提交交互感 */
+        .layui-btn.layui-btn-normal {
+            background-color: #6a994e !important;
+            border-color: #6a994e !important;
+            color: #fff !important;
+            border-radius: 6px !important;
+        }
+        .layui-btn.layui-btn-normal:hover {
+            background-color: #5a8a40 !important;
+            border-color: #5a8a40 !important;
+        }
+
+        /* 7. 修复两列布局问题：添加row容器，确保列并排显示 */
+        .layui-row {
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .layui-col-md6 {
+            width: 50%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        /* 8. 移动端适配：两列布局在小屏幕下垂直排列 */
+        @media (max-width: 768px) {
+            .layui-col-md6 {
+                width: 100%;
+                padding: 0;
+                margin-bottom: 15px;
+            }
+        }
+
+        /* 9. 弹窗样式：同步牛油果色系，适配提交提示 */
+        .layui-layer-title {
+            background-color: #6a994e !important;
+            color: #fff !important;
+            border-bottom: none !important;
+        }
+        .layui-layer-btn .layui-layer-btn0 {
+            background-color: #6a994e !important;
+            border-color: #6a994e !important;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 标题区域 -->
+<fieldset class="layui-elem-field layui-field-title">
+    <legend style="font-weight: bold;">周教学计划</legend>
+</fieldset>
+
+<!-- 表单区域 -->
+<form class="layui-form">
+    <!-- 教学名称（修复重复class问题，保留默认值“C++”） -->
+    <div class="layui-form-item">
+        <label class="layui-form-label required">教学名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="exam" class="layui-input" lay-verify="required"
+                   placeholder="请输入教学名称" value="C++">
+        </div>
+    </div>
+
+    <!-- 教师（修复重复id和class问题，保留默认值“李四”） -->
+    <div class="layui-form-item">
+        <label class="layui-form-label required">教师</label>
+        <div class="layui-input-block">
+            <input type="text" name="teacher" class="layui-input" lay-verify="required"
+                   placeholder="请输入教师姓名" value="李四">
+        </div>
+    </div>
+
+    <!-- 班级 + 周次（添加row容器，修复原布局错乱问题） -->
+    <div class="layui-row">
+        <div class="layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">班级</label>
+                <div class="layui-input-block">
+                    <select name="class" lay-search="{caseSensitive:true}" lay-verify="required">
+                        <option value="">请选择班级</option>
+                        <option value="1">24130416</option>
+                        <option value="2">24130417</option>
+                        <option value="3">24130418</option>
+                        <option value="4">24130419</option>
+                        <option value="5">24130420</option>
+                        <option value="6">24130421</option>
+                        <option value="7">24130422</option>
+                        <option value="8">24130423</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">周次</label>
+                <div class="layui-input-block">
+                    <select name="week" lay-search="{caseSensitive:true}" lay-verify="required">
+                        <option value="">请选择周次</option>
+                        <option value="1">第1周</option>
+                        <option value="2">第2周</option>
+                        <option value="3">第3周</option>
+                        <option value="4">第4周</option>
+                        <option value="5">第5周</option>
+                        <option value="6">第6周</option>
+                        <option value="7">第7周</option>
+                        <option value="8">第8周</option>
+                        <option value="9">第9周</option>
+                        <option value="10">第10周</option>
+                        <option value="11">第11周</option>
+                        <option value="12">第12周</option>
+                        <option value="13">第13周</option>
+                        <option value="14">第14周</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 星期 + 时间段（添加row容器，修复原布局错乱问题） -->
+    <div class="layui-row">
+        <div class="layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">星期</label>
+                <div class="layui-input-block">
+                    <select name="weekday" lay-search="{caseSensitive:true}" lay-verify="required">
+                        <option value="">请选择星期</option>
+                        <option value="1">星期日</option>
+                        <option value="2">星期一</option>
+                        <option value="3">星期二</option>
+                        <option value="4">星期三</option>
+                        <option value="5">星期四</option>
+                        <option value="6">星期五</option>
+                        <option value="7">星期六</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">时间段</label>
+                <div class="layui-input-block">
+                    <select name="timeSlot" lay-search="{caseSensitive:true}" lay-verify="required">
+                        <option value="">请选择时间段</option>
+                        <option value="1">8:00-9:40</option>
+                        <option value="2">10:10-11:50</option>
+                        <option value="3">14:30-16:10</option>
+                        <option value="4">16:40-18:20</option>
+                        <option value="5">19:30-21:10</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 周计划内容 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">周计划内容</label>
+        <div class="layui-input-block">
+            <textarea name="planContent" class="layui-textarea" placeholder="请输入周教学计划"></textarea>
+        </div>
+    </div>
+
+    <!-- 备注 -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+        </div>
+    </div>
+
+    <!-- 提交按钮 -->
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</form>
+
+<!-- 引入layui并添加提交逻辑 -->
+<script src="../lib/layui-v2.6.3/layui.js"></script>
+<script>
+// 初始化layui模块，补充表单提交与提示功能
+layui.use(['form', 'layer'], function () {
+    const form = layui.form;
+    const layer = layui.layer;
+
+    // 表单提交事件
+    form.on('submit(saveBtn)', function (data) {
+        // 打印表单数据（用于调试）
+        console.log('周教学计划数据：', data.field);
+
+        // 提交成功提示（弹窗样式已同步牛油果色系）
+        layer.msg('周教学计划保存成功！', {icon: 1});
+
+        // 阻止表单默认跳转
+        return false;
+    });
+
+    // 渲染表单（确保下拉框等组件正常显示）
+    form.render();
+});
+</script>
+
+</body>
+</html>

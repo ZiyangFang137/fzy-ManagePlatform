@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>查看详情</title>
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css">
+		<style>
+			/* 1. 页面最外层背景：核心牛油果色（#e6f5e9，浅黄绿调，贴近牛油果外皮柔和质感） */
+			body {
+				background-color: #e6f5e9;
+				margin: 0;
+				padding: 20px; /* 增加内边距，避免表单贴边，提升美观度 */
+			}
+			/* 为带有require类的元素添加红色星号前缀（查看场景保留标记，明确必填项） */
+			.required::before {
+				content: "*";
+				color: #ff0000;
+				margin-right: 4px;
+				font-weight: bold;				
+			}
+			/* 2. 表单标题栏（fieldset）：牛油果色系样式，增强视觉焦点 */
+			.layui-elem-field {
+				border-color: #c9e2d0 !important; /* 边框：牛油果浅灰绿，弱化生硬感 */
+			}
+			.layui-field-title legend {
+				background-color: #d4e9d9 !important; /* 标题背景：浅牛油果绿 */
+				padding: 0 15px; /* 增加内边距，包裹标题文字 */
+				border-radius: 4px; /* 圆角优化，更显柔和 */
+			}
+			/* 3. 查看场景核心：输入框/下拉框设为只读样式，背景用浅牛油果绿，避免编辑误导 */
+			.layui-input[readonly], .layui-select[disabled], .layui-textarea[readonly] {
+				background-color: #d4e9d9 !important; /* 只读背景：浅牛油果绿 */
+				border-color: #c9e2d0 !important; /* 边框：牛油果浅灰绿 */
+				color: #4e5969 !important; /* 文字颜色：深灰，确保可读性 */
+				cursor: default; /* 鼠标样式：默认箭头，而非输入光标 */
+			}
+			/* 4. 单选按钮：查看场景禁用交互，颜色适配牛油果色系 */
+			.layui-form-radio[disabled] > i, 
+			.layui-form-radio[disabled] > span {
+				color: #6a994e !important; /* 禁用状态颜色：深牛油果绿 */
+				cursor: default;
+			}
+			/* 5. 按钮样式：适配牛油果色系，区分“返回”与“编辑”（查看场景常用按钮） */
+			.layui-btn-normal {
+				background-color: #6a994e !important; /* 主按钮：深牛油果绿 */
+				border-color: #6a994e !important;
+			}
+			.layui-btn-normal:hover {
+				background-color: #5a8a40 !important; /* hover：更深的牛油果绿，增强交互感 */
+				border-color: #5a8a40 !important;
+			}
+			.layui-btn-primary {
+				border-color: #c9e2d0 !important; /* 次要按钮：牛油果浅灰绿边框 */
+				color: #6a994e !important; /* 文字：深牛油果绿 */
+			}
+			.layui-btn-primary:hover {
+				background-color: #d4e9d9 !important; /* hover背景：浅牛油果绿 */
+			}
+			/* 6. 日期选择器：适配只读样式，避免编辑 */
+			#ID-laydate-type-year[readonly] {
+				background-color: #d4e9d9 !important;
+				border-color: #c9e2d0 !important;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 网页标题，这里用fieldset来设置 -->
+		<fieldset class="layui-elem-field layui-field-title">
+			<legend style="font-weight: bold;">学生信息详情</legend>
+		</fieldset>
+		
+		
+		<div class="layui-form" lay-filter="studentForm">
+			<!-- 学号：查看场景设为只读，禁止编辑 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">学号</label>
+				<div class="layui-input-block">
+				<input id="xuehao" type="text" name="xuehao" class="layui-input" value="2024001001" readonly>
+					</div>
+			</div>
+			<!-- 姓名：只读状态 -->
+			<div class="layui-form-item">
+					<label class="layui-form-label required">姓名</label>
+					<div class="layui-input-block">
+					<input id="username" type="text" name="username" class="layui-input" value="张三" readonly>
+			</div>
+				</div>
+			<!-- 籍贯：禁用下拉，固定选中值 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">籍贯</label>
+				<div class="layui-input-block">
+					<select disabled lay-verify="required">
+						<option value="1">山西大同</option>
+						<option value="2" selected>山西太原</option> <!-- 固定选中“山西太原”，模拟详情数据 -->
+						<option value="3">山西临汾</option>
+						<option value="3">山西吕梁</option>
+						<option value="3">山西晋中</option>
+						<option value="3">山西朔州</option>
+						<option value="3">山西长治</option>
+					</select>
+				</div>
+			</div>
+			<!-- 性别：禁用单选，固定选中“男” -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">性别</label>
+				<div class="layui-input-block">
+					<input type="radio" name="sex" value="男" title="男" checked disabled>
+					<input type="radio" name="sex" value="女" title="女" disabled>
+				</div>
+			</div>
+			<!-- 学校全称：只读状态 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">学校全称</label>
+				<div class="layui-input-block">
+				<input id="schoolName" type="text" name="schoolName" class="layui-input" value="中北大学" readonly>
+				</div>
+			</div>
+			<!-- 专业：禁用下拉，固定选中值 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">专业</label>
+				<div class="layui-input-block">
+					<select disabled lay-verify="required">
+						<option value="1" selected>计算机科学与技术</option> <!-- 固定选中“计算机科学与技术” -->
+						<option value="2">电子信息工程</option>
+						<option value="3">机械电子工程</option>
+						<option value="3">软件工程</option>
+					</select>
+				</div>
+			</div>
+			<!-- 班级：修复原col-md6布局错乱，改为标准form-item，禁用下拉 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">班级</label>
+				<div class="layui-input-block">
+					<select disabled lay-search="{caseSensitive:true}">
+						<option value="">请选择班级</option>
+						<option value="1">24130416</option>
+						<option value="2" selected>24130417</option> <!-- 固定选中“24130417” -->
+						<option value="3">24130418</option>
+						<option value="4">24130419</option>
+						<option value="5">24130420</option>
+						<option value="6">24130421</option>
+						<option value="7">24130422</option>
+						<option value="8">24130423</option>
+					</select>
+				</div>
+			</div>
+			<!-- 年级：只读状态，填充默认值 -->
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label required">年级</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" id="ID-laydate-type-year" value="2024" readonly>
+					</div>
+				</div>
+			</div>
+			<!-- 方向：禁用下拉，固定选中值 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">方向</label>
+				<div class="layui-input-block">
+					<select disabled lay-verify="required">
+						<option value="1" selected>A方向</option> <!-- 固定选中“A方向” -->
+						<option value="2">B方向</option>
+						<option value="3">C方向</option>
+						<option value="4">D方向</option>
+					</select>
+				</div>
+			</div>
+			<!-- 考研考公：禁用单选，固定选中“考研” -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">考研考公</label>
+				<div class="layui-input-block">
+					<input type="radio" name="kaoshi" value="考研" title="考研" checked>
+					<input type="radio" name="kaoshi" value="考公" title="考公" disabled>
+					<input type="radio" name="kaoshi" value="其他" title="其他" disabled>
+				</div>
+			</div>
+			<!-- 电话号码：只读状态 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">电话号码</label>
+				<div class="layui-input-block">
+				<input id="num" type="text" name="num" class="layui-input" value="13800138000" readonly>
+				</div>
+			</div>
+			<!-- 紧急联系人：只读状态 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">紧急联系人</label>
+				<div class="layui-input-block">
+				<input id="jname" type="text" name="jname" class="layui-input" value="张父" readonly>
+				</div>
+			</div>
+			<!-- 紧急联系人电话号码：只读状态 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">紧急联系人电话号码</label>
+				<div class="layui-input-block">
+				<input id="jnum" type="text" name="jnum" class="layui-input" value="13900139000" readonly>
+				</div>
+			</div>
+			<!-- 备注：只读状态，填充示例内容 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label">备注</label>
+				<div class="layui-input-block">
+					<textarea name="remark" class="layui-textarea" readonly>该生成绩优异，积极参与实训项目。</textarea>
+				</div>
+			</div> 
+			<!-- 按钮区：查看场景替换为“返回”和“编辑”，适配牛油果色系 -->
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn layui-btn-primary" id="backBtn">返回列表</button>
+					<button class="layui-btn layui-btn-normal" id="editBtn" style="margin-left: 10px;">编辑信息</button>
+				</div>
+			</div>
+		</div>
+		
+		<script src="../lib/layui-v2.6.3/layui.js"></script>
+		<script>
+		layui.use(['form', 'laydate', 'layer'], function(){
+			var form = layui.form;
+			var laydate = layui.laydate;
+			var layer = layui.layer;
+
+			// 年选择器：查看场景设为只读，仅作展示（若需编辑可移除readonly）
+			laydate.render({
+				elem: '#ID-laydate-type-year',
+				type: 'year',
+				theme: '#d4e9d9' // 日期选择器主题：浅牛油果绿，与页面风格统一
+			});
+
+			// 1. 返回列表按钮逻辑（模拟跳转）
+			document.getElementById('backBtn').addEventListener('click', function(){
+				layer.confirm('确定要返回学生列表吗？', {
+					title: '提示',
+					icon: 3
+				}, function(index){
+					// 实际项目中可替换为列表页URL，如 window.location.href = 'student-list.html';
+					layer.msg('正在返回列表...', {icon: 1, time: 1000}, function(){
+						layer.close(index);
+					});
+				});
+			});
+
+			// 2. 编辑信息按钮逻辑（模拟编辑权限，可根据需求扩展）
+			document.getElementById('editBtn').addEventListener('click', function(){
+				layer.msg('编辑功能待实现（可解除表单readonly/disabled状态开启编辑）', {icon: 0, time: 2000});
+				// 若需开启编辑，可执行以下代码（解除只读/禁用）：
+				// document.querySelectorAll('.layui-input[readonly], textarea[readonly]').forEach(el => el.removeAttribute('readonly'));
+				// document.querySelectorAll('select[disabled], input[type="radio"][disabled]').forEach(el => el.removeAttribute('disabled'));
+				// form.render(); // 重新渲染表单
+			});
+
+			// 3. 渲染表单（确保layui样式生效）
+			form.render();
+		});
+		</script>
+		   
+	</body>
+</html>

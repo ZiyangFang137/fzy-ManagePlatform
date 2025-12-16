@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>查询面试结果</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+	<link rel="stylesheet" href="../css/public.css" media="all">
+	<style>
+		/* 新增：牛油果色系背景样式，不修改原代码 */
+		/* 1. 全局背景：牛油果浅绿 */
+		body {
+			background-color: #e6f5e9 !important;
+			margin: 0;
+			padding: 15px 0;
+		}
+
+		/* 2. 容器背景：白色，与全局浅绿分层 */
+		.layuimini-container {
+			background-color: #fff !important;
+			border-radius: 8px !important;
+			box-shadow: 0 2px 10px rgba(106, 153, 78, 0.1) !important;
+			margin: 0 15px;
+			padding: 20px 0;
+		}
+
+		/* 3. 搜索区：牛油果极浅绿背景+浅绿边框 */
+		.table-search-fieldset {
+			border-color: #c9e2d0 !important;
+			background-color: #f9fdf7 !important;
+			border-radius: 8px !important;
+			padding: 15px 20px !important;
+			margin: 0 20px 25px !important;
+		}
+
+		/* 搜索区标题：牛油果深绿 */
+		.table-search-fieldset legend {
+			color: #6a994e !important;
+			font-weight: 500 !important;
+			padding: 0 10px !important;
+		}
+
+		/* 4. 输入框/下拉框：牛油果浅绿边框 */
+		.layui-input, .layui-select, .layui-textarea {
+			border-color: #c9e2d0 !important;
+			border-radius: 6px !important;
+		}
+		/* 聚焦时加深为牛油果深绿，明确交互状态 */
+		.layui-input:focus, .layui-select:focus, .layui-textarea:focus {
+			border-color: #6a994e !important;
+			box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
+		}
+
+		/* 5. 搜索按钮：牛油果深绿，hover时加深 */
+		.layui-btn.layui-btn-primary[data-search-btn] {
+			background-color: #6a994e !important;
+			border-color: #6a994e !important;
+			color: #fff !important;
+		}
+		.layui-btn.layui-btn-primary[data-search-btn]:hover {
+			background-color: #5a8a40 !important;
+			border-color: #5a8a40 !important;
+		}
+
+		/* 6. 表格：牛油果浅绿边框，表头背景浅绿 */
+		.layui-table {
+			border-color: #c9e2d0 !important;
+			margin: 0 20px !important;
+		}
+		.layui-table th {
+			background-color: #f9fdf7 !important;
+			color: #4e5969 !important;
+			border-color: #c9e2d0 !important;
+		}
+		.layui-table td {
+			border-color: #c9e2d0 !important;
+		}
+		/* 表格 hover 行背景：极浅绿 */
+		.layui-table tbody tr:hover {
+			background-color: #f0f8f2 !important;
+		}
+
+		/* 7. 表格操作按钮：适配牛油果色系 */
+		/* 查看/修改按钮：牛油果深绿 */
+		.layui-btn.layui-btn-normal.layui-btn-xs,
+		.layui-btn.layui-btn-xs[data-count-edit]:not(.layui-btn-danger) {
+			background-color: #6a994e !important;
+			border-color: #6a994e !important;
+			color: #fff !important;
+		}
+		/* 删除按钮：保留原红色，确保警示性 */
+		.layui-btn.layui-btn-danger.layui-btn-xs {
+			background-color: #FF5722 !important;
+			border-color: #FF5722 !important;
+		}
+
+		/* 8. 日期选择器：适配牛油果色系 */
+		.layui-laydate {
+			border-color: #c9e2d0 !important;
+			border-radius: 6px !important;
+		}
+		.layui-laydate-header {
+			background-color: #d4e9d9 !important;
+			border-color: #c9e2d0 !important;
+		}
+		.layui-laydate-content td:hover,
+		.layui-laydate-content td.layui-laydate-selected {
+			background-color: #f0f8f2 !important;
+			color: #6a994e !important;
+		}
+
+		/* 9. 开关组件：适配牛油果色系 */
+		.layui-form-switch {
+			border-color: #c9e2d0 !important;
+		}
+		.layui-form-onswitch {
+			background-color: #6a994e !important;
+			border-color: #6a994e !important;
+		}
+	</style>
+</head>
+<body>
+<div class="layuimini-container">
+	<div class="layuimini-main">
+
+		<fieldset class="table-search-fieldset">
+			<legend>搜索信息</legend>
+			<div style="margin: 10px 10px 10px 10px">
+				<form class="layui-form layui-form-pane" action="">
+					<div class="layui-form-item">
+						<div class="layui-form-item">
+						    <div class="layui-inline">
+					      <label class="layui-form-label">日期范围</label>
+					      <div class="layui-inline" id="ID-laydate-range">
+					        <div class="layui-input-inline">
+					          <input type="text" autocomplete="off" id="ID-laydate-start-date" class="layui-input" placeholder="开始日期">
+					        </div>
+					        <div class="layui-form-mid">-</div>
+					        <div class="layui-input-inline">
+					          <input type="text" autocomplete="off" id="ID-laydate-end-date" class="layui-input" placeholder="结束日期">
+					        </div>
+					      </div>
+						  </div>
+						  <div class="layui-form-item">
+						  	<label class="layui-form-label required">阶段名称</label>
+						  	<div class="layui-input-block">
+						  		<select lay-verify="required">
+						  			<option value="1">阶段一</option>
+						  			<option value="2">阶段二</option>
+						  			<option value="3">阶段三</option>
+						  			
+						  		</select>
+						  	</div>
+						  </div>
+						  
+						<div class="layui-inline">
+							<label class="layui-form-label">姓名</label>
+							<div class="layui-input-inline">
+								<input type="text" name="realName" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">学号</label>
+							<div class="layui-input-inline">
+								<input type="text" name="xuehao" placeholder="请输入学号" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						
+						
+						<div class="layui-inline">
+							<label class="layui-form-label">班级</label>
+							<div class="layui-input-inline">
+								<input type="text" name="classname" placeholder="请输入班级" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label required">面试结果</label>
+							<div class="layui-input-block">
+								<select lay-verify="required">
+									<option value="1">优秀</option>
+									<option value="2">良好</option>
+									<option value="3">合格</option>
+									<option value="3">不合格</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="layui-inline">
+							<button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+
+		
+		<table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+
+		<!--自定义的列模板-->
+		<script type="text/html" id="statusTableBar">
+			<input type="checkbox" name="status" value="{{d.userid}}" checked lay-skin="switch" lay-text="启用|禁用" lay-event="open" lay-filter="modifystatus" {{ d.status == '1'? 'checked' : '' }}/>
+		</script>
+
+		<script type="text/html" id="currentTableBar">
+			<a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="detail">查看结果</a>
+			<a class="layui-btn  layui-btn-xs data-count-edit" lay-event="edit">修改结果</a>
+			<a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+		</script>
+
+	</div>
+</div>
+<script src="../lib/layui-v2.6.3/layui.js">
+			
+		</script>
+<script>
+	layui.use(['form', 'table'], function () {
+		var $ = layui.jquery,
+				form = layui.form,
+				table = layui.table;
+
+		table.render({
+			elem: '#currentTableId',
+			url: '../api/m.json',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: ['filter', 'exports', 'print', {
+				title: '提示',
+				layEvent: 'LAYTABLE_TIPS',
+				icon: 'layui-icon-tips'
+			}],
+			cols: [[
+				{type: "checkbox", width: 50},
+				{field: 'id', width: 80, title: '学号', sort: true},
+				{field: 'realname', width: 80, title: '姓名'},
+				
+				
+				{field: 'classname', title: '班级', width: 100},
+				{field: 'grade', width: 80, title: '年级', sort: true},
+				{field: 'over', width: 100, title: '面试结果'},
+				{field: 'jieduan', width: 100, title: '阶段名称'},
+				
+				{
+					field : 'status',
+					width: 100,
+					title : '用户状态',
+					templet : '#statusTableBar',
+					unresize : true,
+					align: "center"
+				},
+				{title: '操作', minWidth: 130, toolbar: '#currentTableBar', align: "center"}
+			]],
+			limits: [10, 15, 20, 25, 50, 100],
+			limit: 15,
+			page: true,
+			skin: 'line'
+		});
+
+		// 监听搜索操作
+		form.on('submit(data-search-btn)', function (data) {
+			var result = JSON.stringify(data.field);
+			layer.alert(result, {
+				title: '最终的搜索信息'
+			});
+
+			//执行搜索重载
+			table.reload('currentTableId', {
+				page: {
+					curr: 1
+				}
+				, where: {
+					searchParams: result
+				}
+			}, 'data');
+
+			return false;
+		});
+
+		form.on('switch(modifystatus)', function(obj){
+			console.log(obj);
+			var param = obj.value;
+		});
+
+		/**
+		 * toolbar监听事件
+		 */
+		
+
+		//监听表格复选框选择
+		table.on('checkbox(currentTableFilter)', function (obj) {
+			console.log(obj)
+		});
+
+		table.on('tool(currentTableFilter)', function (obj) {
+			var data = obj.data;
+			if(obj.event === 'detail'){
+				//layer.alert("查看详情");
+				var index = layer.open({
+					title: '查看成绩',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					area: ['100%', '100%'],
+					content: 'mXQ.html',
+				});
+				$(window).on("resize", function () {
+					layer.full(index);
+				});
+				return false;
+			} else if (obj.event === 'edit') {
+
+				var index = layer.open({
+					title: '修改成绩',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					area: ['100%', '100%'],
+					content: 'mXQ.html',
+				});
+				$(window).on("resize", function () {
+					layer.full(index);
+				});
+				return false;
+			} else if (obj.event === 'delete') {
+				layer.confirm('真的删除行么', function (index) {
+					obj.del();
+					layer.close(index);
+				});
+			}
+		});
+
+	});
+
+	// 年选择器（选择入学年份）
+	
+	
+	layui.use(function(){
+	  var laydate = layui.laydate;
+laydate.render({
+    elem: '#ID-laydate-range',
+    range: ['#ID-laydate-start-date', '#ID-laydate-end-date']
+  });
+  });
+
+</script>
+
+</body>
+</html>

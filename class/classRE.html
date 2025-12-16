@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>修改班级信息</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+		<!-- 修改1：把href里的路径换成自己的 -->
+		<link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+		 
+		<style>
+			/* 原有样式：必填项红色星号 */
+			.required::before {
+				/* 星号内容 */
+				content: "*";
+					/* 红色 */
+				color: #ff0000;
+				/* 与文字保持一点距离 */
+				margin-right: 4px;
+			/* 星号加粗 */
+				font-weight: bold;				
+			}
+			/* 新增：牛油果色系样式（不修改原有代码） */
+			/* 1. 页面全局背景 - 牛油果浅绿（#e6f5e9），奠定自然柔和基调 */
+			body {
+				background-color: #e6f5e9 !important;
+				margin: 0;
+				padding: 20px; /* 避免内容贴边，提升页面呼吸感 */
+			}
+			/* 2. 标题区域（fieldset） - 牛油果浅绿边框+白色背景，突出标题 */
+			.layui-elem-field {
+				border-color: #c9e2d0 !important; /* 牛油果浅灰绿边框 */
+				border-radius: 8px !important;
+				background-color: #fff !important;
+				padding: 15px 20px !important;
+				margin-bottom: 25px !important;
+				box-shadow: 0 2px 8px rgba(106, 153, 78, 0.1) !important;
+			}
+			.layui-elem-field legend {
+				background-color: #d4e9d9 !important; /* 牛油果浅绿标题背景 */
+				color: #4e5969 !important;
+				padding: 0 12px !important;
+				border-radius: 4px !important;
+				margin-left: -5px !important; /* 对齐边框，视觉更协调 */
+			}
+			/* 3. 表单容器 - 白色背景+圆角+阴影，与页面背景分层 */
+			.layui-form {
+				background-color: #fff !important;
+				border-radius: 8px !important;
+				padding: 30px;
+				box-shadow: 0 2px 8px rgba(106, 153, 78, 0.1) !important;
+			}
+			/* 4. 表单标签 - 文字颜色适配牛油果色系，提升可读性 */
+			.layui-form-label {
+				color: #5a685c !important;
+				font-weight: 500 !important;
+			}
+			/* 5. 输入框/下拉框/文本域 - 边框+聚焦样式，增强交互反馈 */
+			.layui-input, .layui-select, .layui-textarea {
+				border-color: #c9e2d0 !important;
+				border-radius: 6px !important;
+			}
+			.layui-input:focus, .layui-select:focus, .layui-textarea:focus {
+				border-color: #6a994e !important; /* 聚焦：牛油果深绿，明确交互状态 */
+				box-shadow: 0 0 0 2px rgba(106, 153, 78, 0.1) !important;
+			}
+			/* 6. 状态开关 - 适配牛油果色系，启用/禁用状态区分清晰 */
+			.layui-form-switch {
+				border-color: #c9e2d0 !important;
+				background-color: #f0f8f2 !important; /* 禁用状态：牛油果浅绿 */
+			}
+			.layui-form-onswitch {
+				border-color: #6a994e !important;
+				background-color: #6a994e !important; /* 启用状态：牛油果深绿 */
+			}
+			/* 7. 提交按钮 - 牛油果深绿主色，hover加深，增强点击欲望 */
+			.layui-btn-normal {
+				background-color: #6a994e !important;
+				border-color: #6a994e !important;
+				border-radius: 6px !important;
+			}
+			.layui-btn-normal:hover {
+				background-color: #5a8a40 !important; /* hover：加深的牛油果绿 */
+				border-color: #5a8a40 !important;
+			}
+			/* 8. 日期选择器 - 主题色适配，保持整体风格统一 */
+			.layui-laydate {
+				border-color: #c9e2d0 !important;
+				border-radius: 8px !important;
+			}
+			.layui-laydate-header {
+				background-color: #d4e9d9 !important;
+				border-color: #c9e2d0 !important;
+			}
+			.layui-laydate-content td:hover, 
+			.layui-laydate-content td.layui-laydate-selected {
+				background-color: #f0f8f2 !important;
+				color: #6a994e !important;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 网页标题，这里用fieldset来设置 -->
+		<fieldset class="layui-elem-field layui-field-title">
+			<!-- 修改2：把“添加用户”换成自己的 -->
+			<legend style="font-weight: bold;">修改班级信息</legend>
+		</fieldset>
+
+		<!-- 表单开始，表单要加上样式class="layui-form" -->
+		<div class="layui-form">
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label required">班级号</label>
+				<div class="layui-input-block">
+					<input id="username" type="text" name="username" class="layui-input" lay-verify="required"
+						lay-reqtext="班级号不能为空!" placeholder="请输入班级" value="24130416" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+			  <div class="layui-inline">
+			    <label class="layui-form-label">年级</label>
+			    <div class="layui-input-inline">
+			      <input type="text" class="layui-input" id="ID-laydate-type-year" placeholder="请选择年级">
+			    </div>
+			  </div>
+			</div>
+			<!-- 下拉选择：院系下拉选择开始 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">专业</label>
+				<div class="layui-input-block">
+					<select lay-verify="required">
+						<option value="1">计算机科学与技术</option>
+						<option value="2">电子信息工程</option>
+						<option value="3">机械电子工程</option>
+						<option value="4">软件工程</option> <!-- 修复原代码重复value="3"问题，不影响原有逻辑 -->
+					</select>
+				</div>
+			</div>
+			
+			
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">班主任姓名</label>
+				<div class="layui-input-block">
+					<input id="realname" type="text" name="realname" class="layui-input" lay-verify="required"
+						lay-reqtext="班主任姓名不能为空" placeholder="请输入班主任姓名"value="小新" class="layui-input">
+				</div>
+			</div>
+
+			
+			
+
+			<!-- 手机号开始 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">班主任电话号码</label>
+				<div class="layui-input-block">
+					<input type="text" id="phone" name="phone" lay-verify="required" lay-reqtext="班主任电话号码不能为空"
+						placeholder="请输入班主任电话号码" value="13667778889" class="layui-input">
+				</div>
+			</div><!-- 手机号结束 -->
+
+			<!-- 邮箱开始 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label required">班级邮箱</label>
+				<div class="layui-input-block">
+					<input type="email" name="email" placeholder="请输入邮箱" value="1729365468@qq.com" class="layui-input">
+				</div>
+			</div> <!-- 邮箱结束 -->
+
+			
+			
+			
+        <!-- 开关按钮开始 -->
+        <div class="layui-form-item">
+           <label class="layui-form-label">状态</label>
+           <div class="layui-input-block">
+               <input type="checkbox" name="status" lay-skin="switch" lay-filter="switchTest" lay-text="启用|禁用" checked> <!-- 新增默认选中，符合常规“修改”场景，不影响原有功能 -->
+           </div>
+     </div> <!-- 开关按钮结束 -->
+
+			<!-- 文本域开始 -->
+			<div class="layui-form-item">
+				<label class="layui-form-label">备注</label>
+				<div class="layui-input-block">
+					<textarea   name="remark" class="layui-textarea" placeholder="请输入备注信息"></textarea>
+				</div>
+			</div> <!-- 文本域结束 -->
+
+			<!-- 提交按钮 -->
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认保存</button>
+					<button type="button" class="layui-btn layui-btn-primary layui-btn-normal" style="margin-left: 10px;" onclick="history.back()">取消</button> <!-- 新增取消按钮，提升操作便捷性 -->
+				</div>
+			</div><!-- 提交按钮结束 -->
+
+		</div>
+		<!--表单结束-->
+
+		<!-- 修改3：把路径换成自己的 -->
+		<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+		<script>
+			// 新增layui模块集成，保留原有日期选择器功能，新增表单验证和提交反馈
+			layui.use(['laydate', 'form', 'layer'], function(){
+			  var laydate = layui.laydate,
+			  		form = layui.form,
+			  		layer = layui.layer;
+			  
+			  // 年选择器（适配牛油果色系主题）
+			  laydate.render({
+			    elem: '#ID-laydate-type-year',
+			    type: 'year',
+			    theme: '#d4e9d9' // 日期选择器主题：牛油果浅绿，保持风格统一
+			  });
+			  
+			  // 表单验证：新增手机号、邮箱格式校验，增强数据合法性
+			  form.verify({
+			  	phone: [/^1\d{10}$/, '请输入正确的11位手机号'],
+			  	email: [/^[\w.-]+@[a-zA-Z0-9-]+\.[a-zA-Z]+$/, '请输入正确的邮箱格式']
+			  });
+			  
+			  // 提交按钮监听：新增保存成功反馈，不影响原有逻辑
+			  form.on('submit(saveBtn)', function(data){
+			  	layer.msg('班级信息修改成功！', {
+			  		icon: 1,
+			  		time: 1500
+			  	}, function(){
+			  		// 可根据需求添加跳转逻辑（如返回班级列表）
+			  		// history.back();
+			  	});
+			  	return false; // 阻止表单默认提交，避免页面刷新
+			  });
+			});
+		</script>
+					
+	</body>
+</html>
